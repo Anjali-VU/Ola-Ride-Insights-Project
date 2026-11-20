@@ -1,0 +1,41 @@
+OLA RIDE INSIGHTS - POWER BI DAX MEASURES
+Create these measures after loading data table named ola_bookings.
+
+
+Total Bookings = COUNT(ola_bookings[Booking_ID])
+
+Successful Bookings = CALCULATE([Total Bookings], ola_bookings[Booking_Status] = "Success")
+
+Successful Booking % = DIVIDE([Successful Bookings], [Total Bookings], 0)
+
+Customer Cancelled = CALCULATE([Total Bookings], ola_bookings[Booking_Status] = "Canceled by Customer")
+
+Driver Cancelled = CALCULATE([Total Bookings], ola_bookings[Booking_Status] = "Canceled by Driver")
+
+Driver Not Found = CALCULATE([Total Bookings], ola_bookings[Booking_Status] = "Driver Not Found")
+
+Total Successful Booking Value = CALCULATE(SUM(ola_bookings[Booking_Value]), ola_bookings[Booking_Status] = "Success")
+
+Total Booking Value = SUM(ola_bookings[Booking_Value])
+
+Average Ride Distance = AVERAGE(ola_bookings[Ride_Distance])
+
+Total Ride Distance = SUM(ola_bookings[Ride_Distance])
+
+Average Customer Rating = AVERAGE(ola_bookings[Customer_Rating])
+
+Average Driver Rating = AVERAGE(ola_bookings[Driver_Ratings])
+
+Cancellation Rate = DIVIDE([Customer Cancelled] + [Driver Cancelled], [Total Bookings], 0)
+
+Ride Volume = [Total Bookings]
+
+
+POWER BI PAGE PLAN (matching reference slides)
+1. Overall: KPI cards Total Bookings, Successful Bookings, Total Successful Booking Value, Average Ride Distance. Line chart bookings by Booking_Date. Donut chart Booking_Status breakdown. Date slicer.
+2. Vehicle Type: Matrix vehicle types by Total Bookings, Successful Bookings, Total Booking Value, Average Ride Distance, Total Ride Distance. Bar chart top vehicle types by distance. Slicer Vehicle_Type.
+3. Revenue: Column chart booking value by Payment_Method. Bar chart top 5 Customer_ID by successful booking value. Line chart ride distance by Booking_Date. Date/payment slicers.
+4. Cancellation: Bar charts customer cancellation reason and driver cancellation reason; card cancellation rate. Use Booking_Status and reason fields.
+5. Ratings: Histograms/column charts Driver_Ratings and Customer_Rating distributions; average ratings by Vehicle_Type. Keep blanks excluded.
+
+Formatting notes: use dark charcoal sidebar/navigation style, OLA green accent, white/light canvas, clear titles, consistent fonts. Build each page separately and add slicers for Date, Vehicle_Type, Booking_Status, Payment_Method as appropriate. Use Top N filter for Top 5 charts.
